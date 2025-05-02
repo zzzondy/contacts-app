@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "ContactsApp"
 include(":app")
 include(":common:ui")
+include(":common:permissions")
