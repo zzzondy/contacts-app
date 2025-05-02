@@ -52,5 +52,4 @@ dependencies {
     implementation(libs.androidx.material3)
 
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.appcompat)
 }
