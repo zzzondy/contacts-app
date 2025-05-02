@@ -48,5 +48,7 @@ android {
 
 dependencies {
 
+    api(project(":feature:contacts_list:presentation"))
+
     implementation(libs.androidx.navigation)
 }
