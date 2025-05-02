@@ -6,6 +6,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.contacts_list.presentation.screens.contacts_list.ContactsListScreen
+import com.contacts_list.presentation.screens.contacts_list.ContactsListScreenViewModel
 
 @Composable
 fun NavGraphBuilder.registerContactsListFeatureNavigation(
@@ -17,7 +19,10 @@ fun NavGraphBuilder.registerContactsListFeatureNavigation(
         route = ContactsListFeatureScreens.FEATURE_NAVIGATION_ROUTE
     ) {
         composable(route = ContactsListFeatureScreens.ContactsListScreen.route) {
-
+            ContactsListScreen(
+                navController = navController,
+                contactsListScreenViewModel = ContactsListScreenViewModel()
+            )
         }
     }
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_read_contacts_permission">App doesn\'t have a read contacts permission</string>
+    <string name="please_give_read_contacts_permission">Please, give us the permission to read your contacts</string>
+    <string name="give_permission">Give the permission</string>
+</resources>

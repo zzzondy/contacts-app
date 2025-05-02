@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_read_contacts_permission">Приложение не имеет доступа к вашим контактам</string>
+    <string name="please_give_read_contacts_permission">Пожалуйста, дайте разрешение, чтобы просмотреть ваши контакты</string>
+    <string name="give_permission">Дать доступ</string>
+</resources>
