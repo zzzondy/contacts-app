@@ -23,3 +23,8 @@ rootProject.name = "ContactsApp"
 include(":app")
 include(":common:ui")
 include(":common:permissions")
+include(":feature:contacts_list:domain")
+include(":feature:contacts_list:data")
+include(":feature:contacts_list:presentation")
+include(":feature:contacts_list:navigation")
+include(":feature:contacts_list:di")
