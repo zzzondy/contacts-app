@@ -31,7 +31,7 @@ fun ContactsListScreenLoadingState(modifier: Modifier = Modifier) {
         modifier = modifier,
         userScrollEnabled = false
     ) {
-        listOf(1, 2, 3).map {
+        LOADING_LIST.map {
             stickyHeader {
                 Column(
                     modifier = Modifier
@@ -52,7 +52,7 @@ fun ContactsListScreenLoadingState(modifier: Modifier = Modifier) {
                     )
                 }
             }
-            items(3) {
+            items(LOADING_ITEMS_COUNT) {
                 ContactListItem()
             }
         }
@@ -122,3 +122,6 @@ private fun ContactsListScreenLoadingStatePreview() {
         ContactsListScreenLoadingState(Modifier.fillMaxSize())
     }
 }
+
+private val LOADING_LIST = listOf(1, 2, 3)
+private const val LOADING_ITEMS_COUNT = 3
