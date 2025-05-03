@@ -20,12 +20,12 @@ fun NavGraphBuilder.registerContactsListFeatureNavigation(
         val contactsListFeatureComponent =
             (context as ContactsListFeatureComponentProvider).provideContactsListFeatureComponent()
         composable(route = ContactsListFeatureScreens.ContactsListScreen.route) {
-            val viewModel: ContactsListScreenViewModel = daggerViewModel<ContactsListScreenViewModel> {
-                contactsListFeatureComponent.contactsListScreenViewModel
-            }
+            val viewModel: ContactsListScreenViewModel =
+                daggerViewModel<ContactsListScreenViewModel> {
+                    contactsListFeatureComponent.contactsListScreenViewModel
+                }
 
             ContactsListScreen(
-                navController = navController,
                 contactsListScreenViewModel = viewModel
             )
         }

@@ -1,7 +1,5 @@
 package com.contacts_list.presentation.screens.contacts_list
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -14,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Call
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -23,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -34,6 +32,8 @@ import com.contactsapp.ui.theme.ContactsAppTheme
 
 @Composable
 internal fun ContactsListScreenContentState(
+    onCallButtonClicked: (String) -> Unit,
+    onMessageButtonClicked: (String) -> Unit,
     contacts: Map<String, List<Contact>>,
     modifier: Modifier = Modifier
 ) {
@@ -45,7 +45,7 @@ internal fun ContactsListScreenContentState(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.primaryContainer)
+                        .background(MaterialTheme.colorScheme.secondaryContainer)
                         .padding(
                             start = ContactsAppTheme.paddings.medium,
                             top = ContactsAppTheme.paddings.small,
@@ -59,15 +59,22 @@ internal fun ContactsListScreenContentState(
                 }
             }
             items(entry.value.size) { index ->
-                ContactListItem(contact = entry.value[index])
+                ContactListItem(
+                    contact = entry.value[index],
+                    onCallButtonClicked = onCallButtonClicked,
+                    onMessageButtonClicked = onMessageButtonClicked
+                )
             }
         }
     }
 }
 
 @Composable
-private fun ContactListItem(contact: Contact) {
-    val context = LocalContext.current
+private fun ContactListItem(
+    contact: Contact,
+    onCallButtonClicked: (String) -> Unit,
+    onMessageButtonClicked: (String) -> Unit,
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
@@ -79,10 +86,15 @@ private fun ContactListItem(contact: Contact) {
         Image(
             painter = rememberAsyncImagePainter(
                 model = contact.photoUri,
-                error = painterResource(R.drawable.round_person)
+                error = painterResource(id = R.drawable.round_person)
             ),
             contentDescription = stringResource(id = R.string.contact_photo),
             contentScale = ContentScale.Crop,
+            colorFilter = if (contact.photoUri == null) {
+                ColorFilter.tint(MaterialTheme.colorScheme.secondary)
+            } else {
+                null
+            },
             modifier = Modifier
                 .padding(ContactsAppTheme.paddings.small)
                 .size(60.dp)
@@ -103,37 +115,26 @@ private fun ContactListItem(contact: Contact) {
 
         IconButton(
             onClick = {
-                val intent = Intent(Intent.ACTION_DIAL, Uri.parse(TEL + contact.phoneNumber))
-                context.startActivity(intent)
-            },
+                onCallButtonClicked(contact.phoneNumber)
+            }
         ) {
-            Image(
+            Icon(
                 imageVector = Icons.Rounded.Call,
                 contentDescription = stringResource(id = R.string.call_your_contact),
-                modifier = Modifier.padding(ContactsAppTheme.paddings.small),
-                colorFilter = ColorFilter.tint(
-                    color = MaterialTheme.colorScheme.primary
-                )
+                tint = MaterialTheme.colorScheme.primary
             )
         }
 
         IconButton(
             onClick = {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(SMS + contact.phoneNumber))
-                context.startActivity(intent)
-            }
+                onMessageButtonClicked(contact.phoneNumber)
+            },
         ) {
-            Image(
+            Icon(
                 painter = painterResource(id = R.drawable.round_message),
                 contentDescription = stringResource(R.string.message_your_contact),
-                modifier = Modifier.padding(ContactsAppTheme.paddings.small),
-                colorFilter = ColorFilter.tint(
-                    color = MaterialTheme.colorScheme.primary
-                )
+                tint = MaterialTheme.colorScheme.primary
             )
         }
     }
 }
-
-private const val SMS = "sms:"
-private const val TEL = "tel:"

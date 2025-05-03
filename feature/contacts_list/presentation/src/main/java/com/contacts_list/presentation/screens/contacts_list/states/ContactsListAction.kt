@@ -6,9 +6,11 @@ sealed interface ContactsListAction {
 
     data object EnterScreenWithContactsPermission : ContactsListAction
 
-    data object GivePermissionClicked : ContactsListAction
-
     data object ContactsPermissionGranted : ContactsListAction
 
     data object ContactsPermissionLastDialogIsRationaleToShow : ContactsListAction
+
+    data class OnCallButtonClicked(val phoneNumber: String) : ContactsListAction
+
+    data class OnMessageButtonClicked(val phoneNumber: String) : ContactsListAction
 }

@@ -51,6 +51,7 @@ android {
 dependencies {
 
     implementation(project(":common:ui"))
+    implementation(project(":common:permissions"))
 
     api(project(":feature:contacts_list:presentation"))
     api(project(":feature:contacts_list:domain"))
