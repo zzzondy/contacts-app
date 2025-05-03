@@ -12,9 +12,29 @@ class ContactsListRepositoryImpl(
     override suspend fun getContacts(): Map<String, List<Contact>> {
         return contactsListLocalDataSource.getContacts()
             .map { it.toDomain() }
+            .sortedWith(contactComparator)
             .groupBy { contact ->
-                contact.name.first().toString()
+                contact.name.firstOrNull()?.uppercaseChar()?.toString() ?: "#"
             }
-            .toSortedMap()
+            .toSortedMap(groupComparator)
     }
+
+    private val groupComparator = compareBy<String> { groupKey ->
+        when {
+            groupKey[0] in 'А'..'Я' -> 0
+            groupKey[0] in 'а'..'я' -> 0
+            groupKey[0] in 'A'..'Z' -> 1
+            groupKey[0] in 'a'..'z' -> 1
+            else -> 2
+        }
+    }.thenBy { it }
+
+    private val contactComparator = compareBy<Contact> { contact ->
+        val firstChar = contact.name.firstOrNull() ?: '#'
+        when (firstChar) {
+            in 'А'..'Я', in 'а'..'я' -> 0
+            in 'A'..'Z', in 'a'..'z' -> 1
+            else -> 2
+        }
+    }.thenBy { it.name.lowercase() }
 }
