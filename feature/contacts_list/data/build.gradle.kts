@@ -42,4 +42,6 @@ android {
 
 dependencies {
     api(project(":feature:contacts_list:domain"))
+
+    testImplementation(libs.bundles.test.implementation)
 }

@@ -14,27 +14,49 @@ class ContactsListRepositoryImpl(
             .map { it.toDomain() }
             .sortedWith(contactComparator)
             .groupBy { contact ->
-                contact.name.firstOrNull()?.uppercaseChar()?.toString() ?: "#"
+                if (contact.name.isBlank()) {
+                    "#"
+                } else {
+                    if (contact.name.first() == 'ё' || contact.name.first() == 'Ё') {
+                        "Ё"
+                    } else {
+                        contact.name.first().uppercaseChar()
+                            .toString()
+                    }
+                }
             }
             .toSortedMap(groupComparator)
     }
 
     private val groupComparator = compareBy<String> { groupKey ->
         when {
-            groupKey[0] in 'А'..'Я' -> 0
-            groupKey[0] in 'а'..'я' -> 0
-            groupKey[0] in 'A'..'Z' -> 1
-            groupKey[0] in 'a'..'z' -> 1
-            else -> 2
+            groupKey[0] in 'А'..'Е' -> 0
+            groupKey[0] == 'Ё' -> 1
+            groupKey[0] in 'Ж'..'Я' -> 2
+            groupKey[0] in 'A'..'Z' -> 3
+            else -> 4
         }
-    }.thenBy { it }
+    }.thenBy {
+        it
+    }
 
     private val contactComparator = compareBy<Contact> { contact ->
-        val firstChar = contact.name.firstOrNull() ?: '#'
+        val firstChar = if (contact.name.isBlank()) {
+            '#'
+        } else {
+            if (contact.name.first() == 'ё' || contact.name.first() == 'Ё') {
+                'Ё'
+            } else {
+                contact.name.first().uppercaseChar()
+                    .toString()
+            }
+        }
         when (firstChar) {
-            in 'А'..'Я', in 'а'..'я' -> 0
-            in 'A'..'Z', in 'a'..'z' -> 1
-            else -> 2
+            in 'А'..'Е' -> 0
+            'Ё' -> 1
+            in 'Ж'..'Я' -> 2
+            in 'A'..'Z' -> 3
+            else -> 4
         }
     }.thenBy { it.name.lowercase() }
 }

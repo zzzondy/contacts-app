@@ -51,13 +51,15 @@ class ContactsListScreenViewModel(
     }
 
     private fun onEnterScreenWithContactsPermission() {
-        viewModelScope.launch(Dispatchers.IO) {
-            permissionsRepository.updatePermissionDialogFlag(
-                Manifest.permission.READ_CONTACTS,
-                false
-            )
+        if (state.value !is ContactsListState.NoContacts && state.value !is ContactsListState.Content) {
+            viewModelScope.launch(Dispatchers.IO) {
+                permissionsRepository.updatePermissionDialogFlag(
+                    Manifest.permission.READ_CONTACTS,
+                    false
+                )
+            }
+            onContactsPermissionGranted()
         }
-        onContactsPermissionGranted()
     }
 
     private fun onContactsPermissionGranted() {
