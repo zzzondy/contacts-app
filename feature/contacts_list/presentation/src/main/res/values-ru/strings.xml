@@ -10,4 +10,8 @@
     <string name="dismiss">Отклонить</string>
     <string name="give_permission_to_continue">Пожалуйста, дайте разрешение, чтобы продолжить</string>
     <string name="open_settings">Открыть настройки?</string>
+    <string name="contacts">Контакты</string>
+    <string name="no_contacts">Нет контактов</string>
+    <string name="you_have_not_contacts">В вашей телефонной книге нет контактов</string>
+    <string name="add_contacts_in_app">Добавьте контакты в системном приложении, прежде чем пользоваться нашим прилоежнием</string>
 </resources>

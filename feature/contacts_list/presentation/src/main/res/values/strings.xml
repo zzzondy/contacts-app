@@ -10,4 +10,8 @@
     <string name="dismiss">Dismiss</string>
     <string name="give_permission_to_continue">Please, give the permission to continue</string>
     <string name="open_settings">Open settings?</string>
+    <string name="contacts">Contacts</string>
+    <string name="no_contacts">No contacts</string>
+    <string name="you_have_not_contacts">You don\'t have any contacts</string>
+    <string name="add_contacts_in_app">Add contacts in system app Contacts before using this app</string>
 </resources>

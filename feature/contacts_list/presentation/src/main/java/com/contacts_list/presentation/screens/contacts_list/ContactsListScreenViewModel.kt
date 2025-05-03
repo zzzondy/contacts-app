@@ -63,7 +63,12 @@ class ContactsListScreenViewModel(
     private fun onContactsPermissionGranted() {
         viewModelScope.launch(Dispatchers.IO) {
             updateState(ContactsListState.Loading)
-            updateState(ContactsListState.Content(contacts = contactsListRepository.getContacts()))
+            val contacts = contactsListRepository.getContacts()
+            if (contacts.isEmpty()) {
+                updateState(ContactsListState.NoContacts)
+            } else {
+                updateState(ContactsListState.Content(contacts = contactsListRepository.getContacts()))
+            }
         }
     }
 

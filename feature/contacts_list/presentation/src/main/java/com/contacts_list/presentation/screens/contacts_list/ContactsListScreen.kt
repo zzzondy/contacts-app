@@ -5,7 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -14,6 +17,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.contacts_list.presentation.R
 import com.contacts_list.presentation.screens.contacts_list.states.ContactsListAction
 import com.contacts_list.presentation.screens.contacts_list.states.ContactsListEffect
 import com.contacts_list.presentation.screens.contacts_list.states.ContactsListState
@@ -67,6 +72,7 @@ fun ContactsListScreen(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ContactsListScreenContent(
     state: ContactsListState,
@@ -74,7 +80,14 @@ fun ContactsListScreenContent(
     modifier: Modifier = Modifier
 ) {
     Scaffold(
-        modifier = modifier
+        modifier = modifier,
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text = stringResource(id = R.string.contacts))
+                }
+            )
+        }
     ) { paddingValues ->
         when (state) {
             is ContactsListState.NoContactsPermission -> {
@@ -102,7 +115,21 @@ fun ContactsListScreenContent(
                 )
             }
 
-            ContactsListState.Loading -> {}
+            is ContactsListState.Loading -> {
+                ContactsListScreenLoadingState(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues)
+                )
+            }
+
+            is ContactsListState.NoContacts -> {
+                ContactsListScreenNoContactsState(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues)
+                )
+            }
         }
     }
 }

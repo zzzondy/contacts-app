@@ -2,6 +2,7 @@ package com.contacts_list.presentation.screens.contacts_list
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -80,8 +81,10 @@ private fun ContactListItem(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(end = ContactsAppTheme.paddings.small)
             .background(MaterialTheme.colorScheme.background)
+            .clickable {
+                onCallButtonClicked(contact.phoneNumber)
+            }
     ) {
         Image(
             painter = rememberAsyncImagePainter(
@@ -105,6 +108,7 @@ private fun ContactListItem(
             Text(
                 text = contact.name,
                 style = MaterialTheme.typography.titleSmall,
+                modifier = Modifier.padding(bottom = ContactsAppTheme.paddings.extraSmall)
             )
 
             Text(
@@ -116,7 +120,8 @@ private fun ContactListItem(
         IconButton(
             onClick = {
                 onCallButtonClicked(contact.phoneNumber)
-            }
+            },
+            modifier = Modifier.padding(end = ContactsAppTheme.paddings.small)
         ) {
             Icon(
                 imageVector = Icons.Rounded.Call,
