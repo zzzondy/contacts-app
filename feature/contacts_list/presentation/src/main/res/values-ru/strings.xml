@@ -13,5 +13,5 @@
     <string name="contacts">Контакты</string>
     <string name="no_contacts">Нет контактов</string>
     <string name="you_have_not_contacts">В вашей телефонной книге нет контактов</string>
-    <string name="add_contacts_in_app">Добавьте контакты в системном приложении, прежде чем пользоваться нашим прилоежнием</string>
+    <string name="add_contacts_in_app">Добавьте контакты в системном приложении, прежде чем пользоваться нашим приложением</string>
 </resources>
