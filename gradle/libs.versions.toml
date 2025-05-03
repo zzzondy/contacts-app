@@ -15,6 +15,9 @@ daggerVersion = "2.56.1"
 mockito = "5.14.2"
 mockito-kotlin = "4.0.0"
 coroutines-test = "1.10.1"
+robolectricVersion = "4.14"
+androidTestCoreVersion = "1.6.1"
+junitKtx = "1.2.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -39,13 +42,19 @@ mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mo
 mockito-android = { group = "org.mockito", name = "mockito-android", version.ref = "mockito" }
 mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito-kotlin" }
 coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines-test" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectricVersion" }
+androidx-text-core = { group = "androidx.test", name = "core", version.ref = "androidTestCoreVersion" }
+androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
 
 [bundles]
 test-implementation = [
     "junit",
     "mockito-core",
     "mockito-kotlin",
-    "coroutines-test"
+    "coroutines-test",
+    "robolectric",
+    "androidx-text-core",
+    "androidx-junit-ktx"
 ]
 android-test-implementation = [
     "mockito-android"
