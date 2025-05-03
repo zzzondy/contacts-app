@@ -3,4 +3,11 @@
     <string name="no_read_contacts_permission">App doesn\'t have a read contacts permission</string>
     <string name="please_give_read_contacts_permission">Please, give us the permission to read your contacts</string>
     <string name="give_permission">Give the permission</string>
+    <string name="contact_photo">Contact photo</string>
+    <string name="call_your_contact">Call your contact</string>
+    <string name="message_your_contact">Message your contact</string>
+    <string name="confirm">Confirm</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="give_permission_to_continue">Please, give the permission to continue</string>
+    <string name="open_settings">Open settings?</string>
 </resources>

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -51,7 +52,7 @@ dependencies {
     implementation(project(":common:ui"))
     implementation(project(":common:permissions"))
 
-    implementation(project(":feature:contacts_list:domain"))
+    api(project(":feature:contacts_list:domain"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

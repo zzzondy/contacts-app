@@ -6,7 +6,8 @@ sealed class ContactsListState {
 
     data class Content(val contacts: Map<String, List<Contact>>) : ContactsListState()
 
-    data object NoContactsPermission : ContactsListState()
+    data class NoContactsPermission(val isRationaleShowLastPermissionDialog: Boolean) :
+        ContactsListState()
 
     data object Loading : ContactsListState()
 }

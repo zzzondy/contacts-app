@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -48,7 +49,11 @@ android {
 
 dependencies {
 
+    implementation(project(":common:di"))
+    implementation(project(":common:ui"))
+
     api(project(":feature:contacts_list:presentation"))
+    api(project(":feature:contacts_list:di"))
 
     implementation(libs.androidx.navigation)
 }

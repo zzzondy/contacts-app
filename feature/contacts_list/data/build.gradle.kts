@@ -41,5 +41,5 @@ android {
 }
 
 dependencies {
-
+    api(project(":feature:contacts_list:domain"))
 }

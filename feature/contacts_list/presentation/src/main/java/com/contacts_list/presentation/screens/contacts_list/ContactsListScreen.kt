@@ -32,6 +32,8 @@ fun ContactsListScreen(
     LaunchedEffect(hasContactsPermission) {
         if (!hasContactsPermission) {
             contactsListScreenViewModel.onAction(ContactsListAction.EnterScreenWithoutContactsPermission)
+        } else {
+            contactsListScreenViewModel.onAction(ContactsListAction.EnterScreenWithContactsPermission)
         }
     }
 
@@ -54,13 +56,23 @@ fun ContactsListScreenContent(
         when (state) {
             is ContactsListState.NoContactsPermission -> {
                 ContactsListScreenNoPermissionState(
+                    isRationaleShowLastPermissionDialog = state.isRationaleShowLastPermissionDialog,
+                    onAction = onAction,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(paddingValues)
                 )
             }
 
-            is ContactsListState.Content -> {}
+            is ContactsListState.Content -> {
+                ContactsListScreenContentState(
+                    contacts = state.contacts,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues)
+                )
+            }
+
             ContactsListState.Loading -> {}
         }
     }

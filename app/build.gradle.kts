@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    kotlin("kapt")
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -61,6 +63,7 @@ dependencies {
 
     implementation(project(":common:ui"))
     implementation(project(":common:permissions"))
+    implementation(project(":common:di"))
 
     api(project(":feature:contacts_list:navigation"))
 
@@ -73,6 +76,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
