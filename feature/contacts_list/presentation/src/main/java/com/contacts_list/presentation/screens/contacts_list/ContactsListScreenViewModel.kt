@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ContactsListScreenViewModel(
     private val contactsListRepository: ContactsListRepository,
@@ -80,7 +81,7 @@ class ContactsListScreenViewModel(
                 Manifest.permission.READ_CONTACTS,
                 true
             )
-            updateState(ContactsListState.NoContactsPermission(true))
+            withContext(Dispatchers.Main) { updateState(ContactsListState.NoContactsPermission(true)) }
         }
     }
 

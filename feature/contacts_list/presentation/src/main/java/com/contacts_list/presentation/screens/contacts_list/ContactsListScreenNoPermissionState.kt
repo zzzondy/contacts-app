@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.core.app.ActivityCompat
@@ -76,7 +77,8 @@ internal fun ContactsListScreenNoPermissionState(
                 isContactsPermissionDialogVisible = false
                 permissionRequestLauncher.launch(Manifest.permission.READ_CONTACTS)
             },
-            text = stringResource(id = R.string.give_permission_to_continue)
+            text = stringResource(id = R.string.give_permission_to_continue),
+            modifier = Modifier.testTag(FIRST_PERMISSION_DIALOG)
         )
     }
 
@@ -87,7 +89,8 @@ internal fun ContactsListScreenNoPermissionState(
                 isContactsPermissionDialogVisible = false
                 context.openSettings()
             },
-            text = stringResource(id = R.string.open_settings)
+            text = stringResource(id = R.string.open_settings),
+            modifier = Modifier.testTag(SECOND_PERMISSION_DIALOG)
         )
     }
 
@@ -148,7 +151,8 @@ internal fun ContactsListScreenNoPermissionState(
                             permissionRequestLauncher.launch(Manifest.permission.READ_CONTACTS)
                         }
                     }
-                }
+                },
+                modifier = Modifier.testTag(GIVE_PERMISSION_BUTTON)
             ) {
                 Text(text = stringResource(id = R.string.give_permission))
             }
@@ -161,11 +165,12 @@ private fun PermissionExplanationDialog(
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
     text: String,
+    modifier: Modifier = Modifier
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
-            Button(onClick = onConfirm) {
+            Button(onClick = onConfirm, modifier = Modifier.testTag(CONFIRM_DIALOG_BUTTON)) {
                 Text(text = stringResource(R.string.confirm))
             }
         },
@@ -175,10 +180,18 @@ private fun PermissionExplanationDialog(
             }
         },
         title = {
-            Text(text = stringResource(id = R.string.no_read_contacts_permission))
+            Text(
+                text = stringResource(id = R.string.no_read_contacts_permission),
+                modifier = modifier
+            )
         },
         text = {
             Text(text = text)
         }
     )
 }
+
+const val GIVE_PERMISSION_BUTTON = "GIVE_PERMISSION_BUTTON"
+const val FIRST_PERMISSION_DIALOG = "FIRST_PERMISSION_DIALOG"
+const val SECOND_PERMISSION_DIALOG = "SECOND_PERMISSION_DIALOG"
+const val CONFIRM_DIALOG_BUTTON = "CONFIRM_DIALOG_BUTTON"

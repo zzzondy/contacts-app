@@ -14,10 +14,15 @@ coilVersion = "3.1.0"
 daggerVersion = "2.56.1"
 mockito = "5.14.2"
 mockito-kotlin = "4.0.0"
+mockitoInlineVersion = "5.2.0"
 coroutines-test = "1.10.1"
 robolectricVersion = "4.14"
 androidTestCoreVersion = "1.6.1"
 junitKtx = "1.2.1"
+kaspressoVersion = "1.6.0"
+composeKaspressoVersion = "1.6.0"
+testOrchestratorVersion = "1.5.1"
+mockkVersion = "1.13.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -39,25 +44,45 @@ coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coilV
 dagger = { group = "com.google.dagger", name = "dagger", version.ref = "daggerVersion" }
 dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "daggerVersion" }
 mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
-mockito-android = { group = "org.mockito", name = "mockito-android", version.ref = "mockito" }
+mockito-inline = { group = "org.mockito", name = "mockito-inline", version.ref = "mockitoInlineVersion" }
 mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito-kotlin" }
 coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines-test" }
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectricVersion" }
 androidx-text-core = { group = "androidx.test", name = "core", version.ref = "androidTestCoreVersion" }
 androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
+kaspersky-kaspresso = { group = "com.kaspersky.android-components", name = "kaspresso", version.ref = "kaspressoVersion" }
+kaspersky-kaspresso-compose = { group = "com.kaspersky.android-components", name = "kaspresso-compose-support", version.ref = "composeKaspressoVersion" }
+androidx-test-orchestrator = { group = "androidx.test", name = "orchestrator", version.ref = "testOrchestratorVersion" }
+mockk = { group = "io.mockk", name = "mockk-android", version.ref = "mockkVersion" }
 
 [bundles]
 test-implementation = [
     "junit",
     "mockito-core",
+    "mockito-inline",
     "mockito-kotlin",
     "coroutines-test",
     "robolectric",
     "androidx-text-core",
-    "androidx-junit-ktx"
+    "androidx-junit-ktx",
+    "mockk"
 ]
+
 android-test-implementation = [
-    "mockito-android"
+    "kaspersky-kaspresso",
+    "androidx-test-orchestrator",
+    "kaspersky-kaspresso-compose",
+    "androidx-junit",
+    "androidx-espresso-core",
+    "androidx-ui-test-junit4",
+    "mockito-core",
+    "mockito-kotlin",
+    "mockk"
+]
+
+debug-implementation = [
+    "androidx-ui-tooling",
+    "androidx-ui-tooling-preview"
 ]
 
 [plugins]
