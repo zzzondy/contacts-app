@@ -141,5 +141,5 @@ private fun ContactsListScreenContent(
     }
 }
 
-private const val SMS = "sms:"
-private const val TEL = "tel:"
+const val SMS = "sms:"
+const val TEL = "tel:"

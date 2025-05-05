@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.contacts_list.presentation.R
@@ -23,7 +24,11 @@ import com.contactsapp.ui.theme.ContactsAppTheme
 @Composable
 internal fun ContactsListScreenNoContactsState(modifier: Modifier = Modifier) {
     LazyColumn(
-        modifier = modifier.padding(horizontal = ContactsAppTheme.paddings.medium),
+        modifier = modifier
+            .padding(horizontal = ContactsAppTheme.paddings.medium)
+            .testTag(
+                NO_CONTACTS_SCREEN
+            ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         userScrollEnabled = false,
@@ -62,3 +67,5 @@ internal fun ContactsListScreenNoContactsState(modifier: Modifier = Modifier) {
         }
     }
 }
+
+const val NO_CONTACTS_SCREEN = "NO_CONTACTS_SCREEN"

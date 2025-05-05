@@ -1,13 +1,11 @@
 package com.feature.contacts_list.pages
 
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
-import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.onNodeWithText
-import com.contacts_list.presentation.screens.contacts_list.CONFIRM_DIALOG_BUTTON
-import com.contacts_list.presentation.screens.contacts_list.FIRST_PERMISSION_DIALOG
 import com.contacts_list.presentation.screens.contacts_list.GIVE_PERMISSION_BUTTON
-import com.contacts_list.presentation.screens.contacts_list.SECOND_PERMISSION_DIALOG
+import com.contactsapp.permissions.CONFIRM_DIALOG_BUTTON
+import com.contactsapp.permissions.FIRST_PERMISSION_DIALOG
+import com.contactsapp.permissions.SECOND_PERMISSION_DIALOG
 import com.kaspersky.components.kautomator.component.text.UiButton
 import com.kaspersky.components.kautomator.component.text.UiTextView
 
