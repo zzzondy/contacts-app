@@ -2,6 +2,7 @@ package com.contacts_list.presentation.screens.contacts_list
 
 import android.Manifest
 import android.app.Activity
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -21,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -33,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.core.app.ActivityCompat
 import com.contacts_list.presentation.R
 import com.contacts_list.presentation.screens.contacts_list.states.ContactsListAction
+import com.contactsapp.permissions.PermissionManager
 import com.contactsapp.permissions.utils.checkPermission
 import com.contactsapp.permissions.utils.openSettings
 import com.contactsapp.permissions.utils.shouldShowRequestPermissionRationale
@@ -40,59 +43,22 @@ import com.contactsapp.ui.theme.ContactsAppTheme
 
 @Composable
 internal fun ContactsListScreenNoPermissionState(
-    isRationaleShowLastPermissionDialog: Boolean,
     onAction: (ContactsListAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
 
-    val permissionRequestLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            onAction(ContactsListAction.ContactsPermissionGranted)
-        } else {
-            if ((ActivityCompat.shouldShowRequestPermissionRationale(
-                    context as Activity,
-                    Manifest.permission.READ_CONTACTS
-                ).not() && isRationaleShowLastPermissionDialog.not())
-            ) {
-                onAction(ContactsListAction.ContactsPermissionLastDialogIsRationaleToShow)
-            }
+    val permissionManager = remember {
+        PermissionManager(
+            context = context,
+            permission = Manifest.permission.READ_CONTACTS,
+            dialogTitleResId = R.string.no_read_contacts_permission,
+            dialogTextResId = R.string.please_give_read_contacts_permission,
+        ).apply {
+            setOnPermissionGranted { onAction(ContactsListAction.ContactsPermissionGranted) }
         }
     }
-
-    var isContactsPermissionDialogVisible by rememberSaveable {
-        mutableStateOf(false)
-    }
-
-    var isLastContactsPermissionDialogVisible by rememberSaveable {
-        mutableStateOf(false)
-    }
-
-    if (isContactsPermissionDialogVisible) {
-        PermissionExplanationDialog(
-            onDismiss = { isContactsPermissionDialogVisible = false },
-            onConfirm = {
-                isContactsPermissionDialogVisible = false
-                permissionRequestLauncher.launch(Manifest.permission.READ_CONTACTS)
-            },
-            text = stringResource(id = R.string.give_permission_to_continue),
-            modifier = Modifier.testTag(FIRST_PERMISSION_DIALOG)
-        )
-    }
-
-    if (isLastContactsPermissionDialogVisible) {
-        PermissionExplanationDialog(
-            onDismiss = { isLastContactsPermissionDialogVisible = false },
-            onConfirm = {
-                isContactsPermissionDialogVisible = false
-                context.openSettings()
-            },
-            text = stringResource(id = R.string.open_settings),
-            modifier = Modifier.testTag(SECOND_PERMISSION_DIALOG)
-        )
-    }
+    val requestPermission = permissionManager.rememberRequestPermission()
 
     LazyColumn(
         modifier = modifier.padding(horizontal = ContactsAppTheme.paddings.medium),
@@ -140,17 +106,7 @@ internal fun ContactsListScreenNoPermissionState(
         item {
             Button(
                 onClick = {
-                    if (context.checkPermission(Manifest.permission.READ_CONTACTS)) {
-                        onAction(ContactsListAction.ContactsPermissionGranted)
-                    } else {
-                        if (context.shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS)) {
-                            isContactsPermissionDialogVisible = true
-                        } else if (isRationaleShowLastPermissionDialog) {
-                            isLastContactsPermissionDialogVisible = true
-                        } else {
-                            permissionRequestLauncher.launch(Manifest.permission.READ_CONTACTS)
-                        }
-                    }
+                    requestPermission(Manifest.permission.READ_CONTACTS)
                 },
                 modifier = Modifier.testTag(GIVE_PERMISSION_BUTTON)
             ) {
@@ -158,37 +114,6 @@ internal fun ContactsListScreenNoPermissionState(
             }
         }
     }
-}
-
-@Composable
-private fun PermissionExplanationDialog(
-    onDismiss: () -> Unit,
-    onConfirm: () -> Unit,
-    text: String,
-    modifier: Modifier = Modifier
-) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        confirmButton = {
-            Button(onClick = onConfirm, modifier = Modifier.testTag(CONFIRM_DIALOG_BUTTON)) {
-                Text(text = stringResource(R.string.confirm))
-            }
-        },
-        dismissButton = {
-            OutlinedButton(onClick = onDismiss) {
-                Text(text = stringResource(R.string.dismiss))
-            }
-        },
-        title = {
-            Text(
-                text = stringResource(id = R.string.no_read_contacts_permission),
-                modifier = modifier
-            )
-        },
-        text = {
-            Text(text = text)
-        }
-    )
 }
 
 const val GIVE_PERMISSION_BUTTON = "GIVE_PERMISSION_BUTTON"

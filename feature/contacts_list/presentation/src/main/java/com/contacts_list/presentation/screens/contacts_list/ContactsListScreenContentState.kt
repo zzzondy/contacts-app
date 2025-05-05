@@ -43,13 +43,13 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.rememberAsyncImagePainter
 import com.contacts_list.domain.models.Contact
 import com.contacts_list.presentation.R
+import com.contacts_list.presentation.screens.contacts_list.states.ContactsListAction
 import com.contactsapp.ui.theme.ContactsAppTheme
 import kotlinx.coroutines.launch
 
 @Composable
 internal fun ContactsListScreenContentState(
-    onCallButtonClicked: (String) -> Unit,
-    onMessageButtonClicked: (String) -> Unit,
+    onAction: (ContactsListAction) -> Unit,
     contacts: Map<String, List<Contact>>,
     modifier: Modifier = Modifier
 ) {
@@ -108,8 +108,12 @@ internal fun ContactsListScreenContentState(
                 items(entry.value.size) { index ->
                     ContactListItem(
                         contact = entry.value[index],
-                        onCallButtonClicked = onCallButtonClicked,
-                        onMessageButtonClicked = onMessageButtonClicked
+                        onCallButtonClicked = {
+                            onAction(ContactsListAction.OnCallButtonClicked(entry.value[index].phoneNumber))
+                        },
+                        onMessageButtonClicked = {
+                            onAction(ContactsListAction.OnMessageButtonClicked(entry.value[index].phoneNumber))
+                        }
                     )
                 }
             }

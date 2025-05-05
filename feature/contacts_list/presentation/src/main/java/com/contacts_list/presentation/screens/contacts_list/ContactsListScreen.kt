@@ -14,6 +14,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -22,6 +23,7 @@ import com.contacts_list.presentation.R
 import com.contacts_list.presentation.screens.contacts_list.states.ContactsListAction
 import com.contacts_list.presentation.screens.contacts_list.states.ContactsListEffect
 import com.contacts_list.presentation.screens.contacts_list.states.ContactsListState
+import com.contactsapp.permissions.PermissionManager
 import com.contactsapp.permissions.utils.checkPermission
 import com.contactsapp.ui.utils.collectAsEffect
 
@@ -34,16 +36,27 @@ fun ContactsListScreen(
         mutableStateOf(context.checkPermission(Manifest.permission.READ_CONTACTS))
     }
 
+    val permissionManager = remember {
+        PermissionManager(
+            context = context,
+            permission = Manifest.permission.CALL_PHONE,
+            dialogTitleResId = R.string.no_call_permission,
+            dialogTextResId = R.string.please_give_call_permission,
+        )
+    }
+    val requestPermission = permissionManager.rememberRequestPermission()
+
     val state by contactsListScreenViewModel.state.collectAsState()
     contactsListScreenViewModel.effect.collectAsEffect { effect ->
         when (effect) {
             is ContactsListEffect.CallContact -> {
-                context.startActivity(
+                permissionManager.setOnPermissionGranted { context.startActivity(
                     Intent(
-                        Intent.ACTION_DIAL,
+                        Intent.ACTION_CALL,
                         Uri.parse(TEL + effect.phoneNumber)
                     )
-                )
+                ) }
+                requestPermission(Manifest.permission.CALL_PHONE)
             }
 
             is ContactsListEffect.MessageContact -> {
@@ -74,7 +87,7 @@ fun ContactsListScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ContactsListScreenContent(
+private fun ContactsListScreenContent(
     state: ContactsListState,
     onAction: (ContactsListAction) -> Unit,
     modifier: Modifier = Modifier
@@ -92,7 +105,6 @@ fun ContactsListScreenContent(
         when (state) {
             is ContactsListState.NoContactsPermission -> {
                 ContactsListScreenNoPermissionState(
-                    isRationaleShowLastPermissionDialog = state.isRationaleShowLastPermissionDialog,
                     onAction = onAction,
                     modifier = Modifier
                         .fillMaxSize()
@@ -102,12 +114,7 @@ fun ContactsListScreenContent(
 
             is ContactsListState.Content -> {
                 ContactsListScreenContentState(
-                    onCallButtonClicked = {
-                        onAction(ContactsListAction.OnCallButtonClicked(it))
-                    },
-                    onMessageButtonClicked = {
-                        onAction(ContactsListAction.OnMessageButtonClicked(it))
-                    },
+                    onAction = onAction,
                     contacts = state.contacts,
                     modifier = Modifier
                         .fillMaxSize()

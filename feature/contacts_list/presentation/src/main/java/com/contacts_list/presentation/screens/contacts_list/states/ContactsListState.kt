@@ -8,8 +8,7 @@ sealed class ContactsListState {
 
     data object NoContacts : ContactsListState()
 
-    data class NoContactsPermission(val isRationaleShowLastPermissionDialog: Boolean) :
-        ContactsListState()
+    data object NoContactsPermission : ContactsListState()
 
     data object Loading : ContactsListState()
 }

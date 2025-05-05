@@ -21,7 +21,7 @@ import com.contacts_list.presentation.R
 import com.contactsapp.ui.theme.ContactsAppTheme
 
 @Composable
-fun ContactsListScreenNoContactsState(modifier: Modifier = Modifier) {
+internal fun ContactsListScreenNoContactsState(modifier: Modifier = Modifier) {
     LazyColumn(
         modifier = modifier.padding(horizontal = ContactsAppTheme.paddings.medium),
         horizontalAlignment = Alignment.CenterHorizontally,

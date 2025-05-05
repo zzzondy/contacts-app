@@ -26,7 +26,7 @@ import com.contactsapp.ui.theme.ContactsAppTheme
 
 
 @Composable
-fun ContactsListScreenLoadingState(modifier: Modifier = Modifier) {
+internal fun ContactsListScreenLoadingState(modifier: Modifier = Modifier) {
     LazyColumn(
         modifier = modifier,
         userScrollEnabled = false

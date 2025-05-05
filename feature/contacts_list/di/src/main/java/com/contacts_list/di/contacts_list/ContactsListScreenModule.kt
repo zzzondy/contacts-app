@@ -14,7 +14,6 @@ class ContactsListScreenModule {
     @Provides
     fun provideContactsListScreenViewModel(
         contactsListRepository: ContactsListRepository,
-        permissionsRepository: PermissionsRepository
     ): ContactsListScreenViewModel =
-        ContactsListScreenViewModel(contactsListRepository, permissionsRepository)
+        ContactsListScreenViewModel(contactsListRepository)
 }

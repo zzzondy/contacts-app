@@ -1,23 +1,19 @@
 package com.contacts_list.presentation.screens.contacts_list
 
-import android.Manifest
 import androidx.lifecycle.viewModelScope
 import com.contacts_list.domain.repository.ContactsListRepository
 import com.contacts_list.presentation.screens.contacts_list.states.ContactsListAction
 import com.contacts_list.presentation.screens.contacts_list.states.ContactsListEffect
 import com.contacts_list.presentation.screens.contacts_list.states.ContactsListState
-import com.contactsapp.permissions.domain.PermissionsRepository
 import com.contactsapp.ui.state_hoisting.StatefulViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class ContactsListScreenViewModel(
     private val contactsListRepository: ContactsListRepository,
-    private val permissionsRepository: PermissionsRepository
 ) :
     StatefulViewModel<ContactsListState, ContactsListEffect, ContactsListAction>() {
 
@@ -33,7 +29,6 @@ class ContactsListScreenViewModel(
             is ContactsListAction.EnterScreenWithoutContactsPermission -> onEnterScreenWithoutContactsPermission()
             is ContactsListAction.EnterScreenWithContactsPermission -> onEnterScreenWithContactsPermission()
             is ContactsListAction.ContactsPermissionGranted -> onContactsPermissionGranted()
-            is ContactsListAction.ContactsPermissionLastDialogIsRationaleToShow -> onContactsPermissionLastDialogIsRationaleToShow()
             is ContactsListAction.OnCallButtonClicked -> onCallButtonClicked(action.phoneNumber)
             is ContactsListAction.OnMessageButtonClicked -> onMessageButtonClicked(action.phoneNumber)
         }
@@ -42,23 +37,13 @@ class ContactsListScreenViewModel(
     private fun onEnterScreenWithoutContactsPermission() {
         viewModelScope.launch(Dispatchers.IO) {
             updateState(
-                ContactsListState.NoContactsPermission(
-                    permissionsRepository.getPermissionDialogFlag(
-                        Manifest.permission.READ_CONTACTS
-                    )
-                )
+                ContactsListState.NoContactsPermission
             )
         }
     }
 
     private fun onEnterScreenWithContactsPermission() {
         if (state.value !is ContactsListState.NoContacts && state.value !is ContactsListState.Content) {
-            viewModelScope.launch(Dispatchers.IO) {
-                permissionsRepository.updatePermissionDialogFlag(
-                    Manifest.permission.READ_CONTACTS,
-                    false
-                )
-            }
             onContactsPermissionGranted()
         }
     }
@@ -72,16 +57,6 @@ class ContactsListScreenViewModel(
             } else {
                 updateState(ContactsListState.Content(contacts = contactsListRepository.getContacts()))
             }
-        }
-    }
-
-    private fun onContactsPermissionLastDialogIsRationaleToShow() {
-        viewModelScope.launch(Dispatchers.IO) {
-            permissionsRepository.updatePermissionDialogFlag(
-                Manifest.permission.READ_CONTACTS,
-                true
-            )
-            withContext(Dispatchers.Main) { updateState(ContactsListState.NoContactsPermission(true)) }
         }
     }
 
