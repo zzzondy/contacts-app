@@ -1,19 +1,35 @@
 [versions]
 agp = "8.5.0"
-kotlin = "1.9.0"
+kotlin = "2.1.20"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.7"
-activityCompose = "1.10.0"
-composeBom = "2024.04.01"
+activityCompose = "1.10.1"
+composeBom = "2025.04.01"
+composeNavVersion = "2.8.9"
+jetbrainsKotlinJvm = "1.9.0"
+coilVersion = "3.1.0"
+daggerVersion = "2.56.1"
+mockito = "5.14.2"
+mockito-kotlin = "4.0.0"
+mockitoInlineVersion = "5.2.0"
+coroutines-test = "1.10.1"
+robolectricVersion = "4.14"
+androidTestCoreVersion = "1.6.1"
+junitKtx = "1.2.1"
+kaspressoVersion = "1.6.0"
+composeKaspressoVersion = "1.6.0"
+testOrchestratorVersion = "1.5.1"
+mockkVersion = "1.13.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-espresso-intents = { group = "androidx.test.espresso", name = "espresso-intents", version.ref = "espressoCore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
@@ -24,8 +40,58 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavVersion" }
+coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coilVersion" }
+dagger = { group = "com.google.dagger", name = "dagger", version.ref = "daggerVersion" }
+dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "daggerVersion" }
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+mockito-inline = { group = "org.mockito", name = "mockito-inline", version.ref = "mockitoInlineVersion" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito-kotlin" }
+coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines-test" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectricVersion" }
+androidx-text-core = { group = "androidx.test", name = "core", version.ref = "androidTestCoreVersion" }
+androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
+kaspersky-kaspresso = { group = "com.kaspersky.android-components", name = "kaspresso", version.ref = "kaspressoVersion" }
+kaspersky-kaspresso-compose = { group = "com.kaspersky.android-components", name = "kaspresso-compose-support", version.ref = "composeKaspressoVersion" }
+androidx-test-orchestrator = { group = "androidx.test", name = "orchestrator", version.ref = "testOrchestratorVersion" }
+mockk = { group = "io.mockk", name = "mockk-android", version.ref = "mockkVersion" }
+
+[bundles]
+test-implementation = [
+    "junit",
+    "mockito-core",
+    "mockito-inline",
+    "mockito-kotlin",
+    "coroutines-test",
+    "robolectric",
+    "androidx-text-core",
+    "androidx-junit-ktx",
+    "mockk"
+]
+
+android-test-implementation = [
+    "kaspersky-kaspresso",
+    "androidx-test-orchestrator",
+    "kaspersky-kaspresso-compose",
+    "androidx-junit",
+    "androidx-espresso-core",
+    "androidx-espresso-intents",
+    "androidx-ui-test-junit4",
+    "mockito-core",
+    "mockito-kotlin",
+    "mockk",
+]
+
+debug-implementation = [
+    "androidx-ui-tooling",
+    "androidx-ui-tooling-preview"
+]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
 

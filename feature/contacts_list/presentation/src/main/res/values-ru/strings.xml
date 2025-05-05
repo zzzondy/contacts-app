@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_read_contacts_permission">Приложение не имеет доступа к вашим контактам</string>
+    <string name="no_call_permission">Приложение не имеет доступа к вашим звонкам</string>
+    <string name="please_give_read_contacts_permission">Пожалуйста, дайте разрешение, чтобы просмотреть ваши контакты</string>
+    <string name="give_permission">Дать доступ</string>
+    <string name="contact_photo">Фото вашего контакта</string>
+    <string name="call_your_contact">Позвонить вашему контакту</string>
+    <string name="message_your_contact">Написать вашему контакту</string>
+    <string name="confirm">Принять</string>
+    <string name="dismiss">Отклонить</string>
+    <string name="give_permission_to_continue">Пожалуйста, дайте разрешение, чтобы продолжить</string>
+    <string name="contacts">Контакты</string>
+    <string name="no_contacts">Нет контактов</string>
+    <string name="you_have_not_contacts">В вашей телефонной книге нет контактов</string>
+    <string name="add_contacts_in_app">Добавьте контакты в системном приложении, прежде чем пользоваться нашим приложением</string>
+    <string name="please_give_call_permission">Пожалуйста, дайте разрешение, чтобы звонить из приложения</string>
+</resources>
