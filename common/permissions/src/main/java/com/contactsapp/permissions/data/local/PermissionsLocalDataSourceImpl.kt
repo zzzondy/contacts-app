@@ -21,6 +21,6 @@ class PermissionsLocalDataSourceImpl(private val context: Context) : Permissions
     }
 
     companion object {
-        private const val PERMISSIONS_SHARED_PREFERENCES = "PERMISSIONS_SHARED_PREFERENCES"
+        const val PERMISSIONS_SHARED_PREFERENCES = "PERMISSIONS_SHARED_PREFERENCES"
     }
 }

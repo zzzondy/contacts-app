@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="confirm">Подтвердить</string>
+    <string name="dismiss">Отклонить</string>
+    <string name="open_settings">Чтобы продолжить, вам нужно дать разрешение приложению в настройках. Открыть настройки?</string>
+</resources>
