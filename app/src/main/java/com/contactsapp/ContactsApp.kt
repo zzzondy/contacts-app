@@ -11,7 +11,7 @@ import com.contactsapp.di.app.DaggerAppComponent
 class ContactsApp : Application(), ContactsListFeatureComponentProvider {
 
     private var _appComponent: AppComponent? = null
-    val appComponent: AppComponent
+    private val appComponent: AppComponent
         get() = checkNotNull(_appComponent) {
             "AppComponent didn't initialize"
         }
@@ -24,9 +24,3 @@ class ContactsApp : Application(), ContactsListFeatureComponentProvider {
     override fun provideContactsListFeatureComponent(): ContactsListFeatureComponent =
         appComponent.contactsListFeatureComponentFactory.create()
 }
-
-val Context.appComponent: AppComponent
-    get() = when (this) {
-        is ContactsApp -> appComponent
-        else -> applicationContext.appComponent
-    }
