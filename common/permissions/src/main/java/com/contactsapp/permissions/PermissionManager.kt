@@ -101,7 +101,7 @@ class PermissionManager(
             PermissionExplanationDialog(
                 onDismiss = { isLastPermissionDialogVisible = false },
                 onConfirm = {
-                    isPermissionDialogVisible = false
+                    isLastPermissionDialogVisible = false
                     context.openSettings()
                 },
                 text = stringResource(id = R.string.open_settings),
